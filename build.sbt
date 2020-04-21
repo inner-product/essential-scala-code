@@ -6,7 +6,8 @@ ThisBuild / logLevel := Level.Error
 ThisBuild / logLevel in run := Level.Error
 
 libraryDependencies ++= Seq(
-  "org.scalameta" %% "munit"     % "0.7.2" % Test
+  "org.creativescala" %% "doodle" % "0.9.21",
+  "org.scalameta"     %% "munit"  % "0.7.2" % Test
 )
 
 testFrameworks += new TestFramework("munit.Framework")
