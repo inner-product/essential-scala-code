@@ -1,17 +1,17 @@
 package expressions
 
 class MethodTests extends munit.FunSuite {
-  test("greeting".ignore) {
+  test("greeting") {
     assertEquals(Methods.greeting("Essential Scala"), "Hello Essential Scala!")
     assertEquals(Methods.greeting("Noel"), "Hello Noel!")
   }
 
-  test("palindrome".ignore) {
+  test("palindrome") {
     assertEquals(Methods.palindrome("tacocat"), true)
     assertEquals(Methods.palindrome("purrito"), false)
   }
 
-  test("factorial".ignore) {
+  test("factorial") {
     assertEquals(Methods.factorial(1), 1)
     assertEquals(Methods.factorial(2), 2)
     assertEquals(Methods.factorial(3), 6)

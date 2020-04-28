@@ -1,7 +1,5 @@
 package typeclass.json
 
-import scala.util.Try
-
 final case class Email(address: String)
 final case class Person(name: String, email: Email)
 
@@ -18,29 +16,43 @@ trait JsonWriter[A] {
 }
 
 object JsonImplicits {
-  def jsonify[A](value: A)(implicit writer: JsonWriter[A]): JsValue =
-    writer.write(value)
+  implicit class JsonOps[A](value: A) {
+    def toJson(implicit writer: JsonWriter[A]): JsValue =
+      writer.write(value)
+  }
 
   implicit val intWriter: JsonWriter[Int] =
     new JsonWriter[Int] {
-      def write(value: Int): JsValue =
-        JsNumber(value)
+      def write(num: Int): JsValue =
+        JsNumber(num)
     }
 
   implicit val stringWriter: JsonWriter[String] =
     new JsonWriter[String] {
-      def write(value: String): JsValue =
-        JsString(value)
+      def write(str: String): JsValue =
+        JsString(str)
     }
 
-  // implicit val emailWriter: JsonWriter[Email] =
-  //   ???
+  implicit def listWriter[A](implicit writer: JsonWriter[A]): JsonWriter[List[A]] =
+    new JsonWriter[List[A]] {
+      def write(list: List[A]): JsValue =
+        JsArray(list.map(_.toJson))
+    }
 
-  // implicit val personWriter: JsonWriter[Person] =
-  //   ???
+  implicit val emailWriter: JsonWriter[Email] =
+    new JsonWriter[Email] {
+      def write(email: Email): JsValue =
+        email.address.toJson
+    }
 
-  // def listWriter[A](writer: JsonWriter[A]): JsonWriter[List[A]] =
-  //   ???
+  implicit val personWriter: JsonWriter[Person] =
+    new JsonWriter[Person] {
+      def write(person: Person): JsValue =
+        JsObject(Seq(
+          "name"  -> person.name.toJson,
+          "email" -> person.email.toJson
+        ))
+    }
 }
 
 object Main extends App {
@@ -49,21 +61,22 @@ object Main extends App {
   val email1 = Email("alice@cool.com")
   val email2 = Email("charlie@excellent.com")
   val email3 = Email("bob@awesome.com")
-  val emails = List(email1, email2, email3)
 
   val person1 = Person("Alice",   Email("alice@cool.com"))
   val person2 = Person("Charlie", Email("charlie@excellent.com"))
   val person3 = Person("Bob",     Email("bob@awesome.com"))
+
+  val emails = List(email1, email2, email3)
   val people = List(person1, person2, person3)
 
-  // println("""jsonify(email1)  == """ + jsonify(email1))
-  // println("""jsonify(email2)  == """ + jsonify(email2))
-  // println("""jsonify(email3)  == """ + jsonify(email3))
+  println(s"""email1.toJson == ${email1.toJson}""")
+  println(s"""email2.toJson == ${email2.toJson}""")
+  println(s"""email3.toJson == ${email3.toJson}""")
 
-  // println("""jsonify(person1) == """ + jsonify(person1))
-  // println("""jsonify(person2) == """ + jsonify(person2))
-  // println("""jsonify(person3) == """ + jsonify(person3))
+  println(s"""person1.toJson == ${person1.toJson}""")
+  println(s"""person2.toJson == ${person2.toJson}""")
+  println(s"""person3.toJson == ${person3.toJson}""")
 
-  // println("""jsonify(emails)  == """ + jsonify(emails))
-  // println("""jsonify(people)  == """ + jsonify(people))
+  println(s"""emails.toJson == ${emails.toJson}""")
+  println(s"""people.toJson == ${people.toJson}""")
 }
