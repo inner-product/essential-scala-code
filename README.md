@@ -39,7 +39,7 @@ To get started:
    e.g. `~/essential-scala-code`:
 
    ~~~
-   bash$ git clone https://github.com/underscoreio/essential-scala-code.git
+   bash$ git clone https://github.com/inner-product/essential-scala-code.git
    ~~~
 
 3. Change to the root directory in the repository:
@@ -81,7 +81,7 @@ Complete the following steps outlined in Chapter 1 in the section entitled
    e.g. `C:\essential-scala-code`:
 
    ~~~
-   C:\> git clone https://github.com/underscoreio/essential-scala-code.git ↩
+   C:\> git clone https://github.com/inner-product/essential-scala-code.git ↩
                     C:\essential-scala-code
    ~~~
 
