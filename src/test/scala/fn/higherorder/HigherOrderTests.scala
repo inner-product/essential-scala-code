@@ -13,13 +13,13 @@ class HigherOrderSpec extends munit.FunSuite {
 
   test("intList.filter".ignore) {
     // assertEquals(ints.filter(_ > 0), (ints))
-    // assertEquals(ints.filter(_ < 0), (IntNil))
-    // assertEquals(ints.filter(_ > 3), (IntPair(5, IntNil)))
+    // assertEquals(ints.filter(_ < 0), (IntNil()))
+    // assertEquals(ints.filter(_ > 3), (IntPair(5, IntNil())))
   }
 
   test("intList.find".ignore) {
     // assertEquals(ints.find(_ > 0), (IntSome(1)))
-    // assertEquals(ints.find(_ < 0), (IntNone))
+    // assertEquals(ints.find(_ < 0), (IntNone()))
     // assertEquals(ints.find(_ > 3), (IntSome(5)))
   }
 }
